@@ -1,0 +1,5 @@
+FROM ghcr.io/cgwalters/c9s-oscore
+RUN mkdir -p /usr/etc-system/ && \
+    echo 'PermitRootLogin prohibit-password' > /etc/ssh/sshd_config.d/35-no-root-pw.conf && \
+    echo 'AuthorizedKeysFile /usr/etc-system/%u.keys' >> /etc/ssh/sshd_config.d/30-auth-system.conf && \
+    echo 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCob+nPcyCDtxUytd0gMqYY5IEv/wvotlDIUl3M3VtV1Gcbhi97zL0xV4YcIwlOKzVb6bBYPpK1zOG73RPAi4cHyhC6KzgDCWX+IxJp7djMxJRRU2ej76Hehpf2Rc86ISyQIrsIVZqLh9vpxmH6gvAW/pBoJ4QA1icUaMOpaFYwkbqnvtjaqE4ncTCzbhMZiWOgQO+k1ulRY4jStG17wsieK5NBkFr7VZhMhpyKj4yqDz8k27JZVC84HyNGrk02XtBXZkXuMWRc4WYDfQ2bKz7pr3gRxSB4QebMXL1JJPAfjDbZNnCKhrYWv34BRIBuPE5Lw1mpzHYpA07iEBDccW9DdetKdqIrQvZe06PfvcolI1uCxf8M/udEK45j5B8FvgKA6yLvJp+FppCGu1pZntFVMdn20Taps3vP4B+xU2kV5WEk8Pm8lJkfO1LNfMvwfhXEunnWJiQWm4PkBMEbrjYY7a7B9Xld70+4pQwiq2h/4ZiEc/ut9VtG5SLE2y8pzn8= anjoseph@fedora' > /usr/etc-system/root.keys && chmod 0600 /usr/etc-system/*.keys && ostree container commit
