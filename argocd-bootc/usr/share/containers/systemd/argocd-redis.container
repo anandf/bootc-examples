@@ -1,0 +1,17 @@
+[Unit]
+Description=Redis cache for k8s manifests
+Documentation=man:podman-generate-systemd(1)
+Wants=network-online.target
+After=network-online.target
+RequiresMountsFor=%t/containers
+
+[Container]
+Image=quay.io/codefresh/redis:7.0.12-alpine
+Label=io.containers.autoupdate=registry
+PublishPort=6379:6379
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target

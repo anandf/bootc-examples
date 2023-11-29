@@ -1,0 +1,11 @@
+FROM quay.io/fedora/fedora-coreos:stable
+
+# Copy our OS configuration - this adds automatic updates
+ADD usr usr
+ADD fed38copr.repo /etc/yum.repos.d/fedora-bootc.repo
+RUN rpm-ostree install bootc && \
+    echo 'PermitRootLogin prohibit-password' > /etc/ssh/sshd_config.d/35-no-root-pw.conf && \
+    echo 'AuthorizedKeysFile /usr/etc-system/%u.keys' >> /etc/ssh/sshd_config.d/30-auth-system.conf && \
+    chmod 0600 /usr/etc-system/*.keys &&\
+    rm -rf /var/cache && \
+    ostree container commit
